@@ -17,3 +17,6 @@ Control flow in Python 3: `if`/`elif`/`else`, `for` and `while` loops, `range`, 
 | `10-add.py` | `add(a, b)`: returns `a + b` |
 | `11-pow.py` | `pow(a, b)`: returns `a` to the power of `b` |
 | `12-fizzbuzz.py` | `fizzbuzz()`: prints FizzBuzz from 1 to 100 |
+| `100-print_tebahpla.py` | Prints the alphabet in reverse, alternating lowercase and uppercase |
+| `101-remove_char_at.py` | `remove_char_at(str, n)`: copies a string without the character at index `n` |
+| `102-magic_calculation.py` | `magic_calculation(a, b, c)`: Python equivalent of the given bytecode |
