@@ -17,3 +17,6 @@ Sets and dictionaries in Python 3: common methods, iteration, and functional too
 | `10-best_score.py` | `best_score(a_dictionary)`: returns the key with the biggest value |
 | `11-multiply_list_map.py` | `multiply_list_map(my_list, number)`: multiplies every value using `map` |
 | `12-roman_to_int.py` | `roman_to_int(roman_string)`: converts a Roman numeral to an integer |
+| `100-weight_average.py` | `weight_average(my_list)`: weighted average of `(score, weight)` tuples |
+| `101-square_matrix_map.py` | `square_matrix_map(matrix)`: squares every value using `map` |
+| `102-complex_delete.py` | `complex_delete(a_dictionary, value)`: deletes every key with a given value |
