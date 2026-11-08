@@ -14,3 +14,4 @@ A `Rectangle` class built up step by step: validated properties, `__str__` and `
 | `7-rectangle.py` | Class attribute `print_symbol` sets the drawing symbol |
 | `8-rectangle.py` | Static method `bigger_or_equal()` returns the rectangle with the bigger area |
 | `9-rectangle.py` | Class method `square()` builds a rectangle with equal sides |
+| `101-nqueens.py` | Prints every solution to the N queens puzzle using backtracking |
