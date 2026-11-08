@@ -16,3 +16,5 @@ Inheritance in Python: subclasses, `isinstance`/`issubclass`/`type`, `super()`, 
 | `9-rectangle.py` | Adds `area()` and `[Rectangle] w/h` string form |
 | `10-square.py` | `Square(Rectangle)` with a validated private size |
 | `11-square.py` | `Square` with its own `[Square] w/h` string form |
+| `100-my_int.py` | `MyInt(int)` with `==` and `!=` inverted |
+| `101-add_attribute.py` | Adds an attribute to an object, or raises `TypeError` if the object cannot hold one |
