@@ -1,0 +1,50 @@
+The ``5-text_indentation`` module
+=================================
+
+    >>> text_indentation = __import__('5-text_indentation').text_indentation
+
+Each delimiter is followed by two new lines, and lines are stripped:
+
+    >>> text_indentation("Hello. How are you? Fine: thanks")
+    Hello.
+    <BLANKLINE>
+    How are you?
+    <BLANKLINE>
+    Fine:
+    <BLANKLINE>
+    thanks
+
+Leading and trailing spaces are removed:
+
+    >>> text_indentation("   Holberton.   School   ")
+    Holberton.
+    <BLANKLINE>
+    School
+
+Text without delimiters:
+
+    >>> text_indentation("No delimiters here")
+    No delimiters here
+
+An empty string prints nothing:
+
+    >>> text_indentation("")
+
+Text that is not a string:
+
+    >>> text_indentation(12)
+    Traceback (most recent call last):
+    ...
+    TypeError: text must be a string
+
+    >>> text_indentation(None)
+    Traceback (most recent call last):
+    ...
+    TypeError: text must be a string
+
+Missing argument:
+
+    >>> text_indentation() # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+    ...
+    TypeError: text_indentation() missing 1 required positional argument: 'text'
