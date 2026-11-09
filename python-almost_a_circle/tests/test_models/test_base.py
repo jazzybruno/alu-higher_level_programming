@@ -17,7 +17,8 @@ class TestBase(unittest.TestCase):
 
     def tearDown(self):
         """Remove JSON files written by the tests."""
-        for name in ("Base.json", "Rectangle.json", "Square.json"):
+        for name in ("Base.json", "Rectangle.json", "Square.json",
+                     "Rectangle.csv", "Square.csv"):
             if os.path.exists(name):
                 os.remove(name)
 
@@ -199,6 +200,42 @@ class TestBase(unittest.TestCase):
         out = Square.load_from_file()
         self.assertEqual([str(s) for s in out], [str(s) for s in squares])
         self.assertTrue(all(type(s) is Square for s in out))
+
+    def test_save_to_file_csv_format(self):
+        """CSV rows follow the id,width,height,x,y and id,size,x,y order."""
+        Rectangle.save_to_file_csv([Rectangle(10, 7, 2, 8, 1)])
+        with open("Rectangle.csv", "r") as f:
+            self.assertEqual(f.read().strip(), "1,10,7,2,8")
+        Square.save_to_file_csv([Square(5, 1, 2, 3)])
+        with open("Square.csv", "r") as f:
+            self.assertEqual(f.read().strip(), "3,5,1,2")
+
+    def test_save_to_file_csv_empty(self):
+        """None and [] write an empty CSV file over the old one."""
+        for cls, obj in ((Rectangle, Rectangle(1, 2)), (Square, Square(1))):
+            for empty in (None, []):
+                cls.save_to_file_csv([obj])
+                cls.save_to_file_csv(empty)
+                self.assertEqual(cls.load_from_file_csv(), [])
+
+    def test_load_from_file_csv_missing(self):
+        """A missing CSV file gives an empty list."""
+        self.assertEqual(Rectangle.load_from_file_csv(), [])
+        self.assertEqual(Square.load_from_file_csv(), [])
+
+    def test_csv_round_trip(self):
+        """Rectangles and Squares round-trip through CSV."""
+        rects = [Rectangle(10, 7, 2, 8), Rectangle(2, 4)]
+        Rectangle.save_to_file_csv(rects)
+        out = Rectangle.load_from_file_csv()
+        self.assertEqual([str(r) for r in out], [str(r) for r in rects])
+        self.assertTrue(all(type(r) is Rectangle for r in out))
+        squares = [Square(5), Square(7, 9, 1)]
+        Square.save_to_file_csv(squares)
+        out = Square.load_from_file_csv()
+        self.assertEqual([str(s) for s in out], [str(s) for s in squares])
+        self.assertTrue(all(type(s) is Square for s in out))
+        self.assertIsNot(out[0], squares[0])
 
 
 if __name__ == "__main__":

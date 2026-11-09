@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Defines the Base class that manages ids for all shapes."""
+import csv
 import json
 
 
@@ -59,25 +60,33 @@ class Base:
             return []
         return [cls.create(**d) for d in dicts]
 
-    @staticmethod
-    def draw(list_rectangles, list_squares):
-        """Draw every Rectangle and Square in a turtle window."""
-        import turtle
+    @classmethod
+    def _csv_fields(cls):
+        """Return the CSV column order for cls."""
+        if cls.__name__ == "Square":
+            return ["id", "size", "x", "y"]
+        return ["id", "width", "height", "x", "y"]
 
-        pen = turtle.Turtle()
-        pen.screen.bgcolor("#f0f0f0")
-        pen.pensize(3)
-        pen.speed(0)
-        colors = ["#1f77b4", "#d62728", "#2ca02c", "#9467bd"]
-        shapes = list(list_rectangles or []) + list(list_squares or [])
-        for i, shape in enumerate(shapes):
-            pen.color(colors[i % len(colors)])
-            pen.penup()
-            pen.goto(shape.x, shape.y)
-            pen.pendown()
-            for _ in range(2):
-                pen.forward(shape.width)
-                pen.left(90)
-                pen.forward(shape.height)
-                pen.left(90)
-        turtle.exitonclick()
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Write list_objs to <cls>.csv, one object per row."""
+        fields = cls._csv_fields()
+        with open(cls.__name__ + ".csv", "w", newline="",
+                  encoding="utf-8") as f:
+            writer = csv.writer(f)
+            for obj in list_objs or []:
+                d = obj.to_dictionary()
+                writer.writerow([d[k] for k in fields])
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Return the list of instances stored in <cls>.csv."""
+        fields = cls._csv_fields()
+        try:
+            with open(cls.__name__ + ".csv", "r", newline="",
+                      encoding="utf-8") as f:
+                rows = [row for row in csv.reader(f) if row]
+        except FileNotFoundError:
+            return []
+        return [cls.create(**dict(zip(fields, map(int, row))))
+                for row in rows]
