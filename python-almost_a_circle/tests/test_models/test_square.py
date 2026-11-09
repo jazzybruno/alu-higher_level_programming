@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Unit tests for models/square.py."""
 import io
+import os
 import unittest
 from contextlib import redirect_stdout
 from models.base import Base
@@ -146,6 +147,29 @@ class TestSquare(unittest.TestCase):
         s2.update(**d)
         self.assertEqual(str(s2), str(s1))
         self.assertNotEqual(s1, s2)
+
+    def test_save_and_load(self):
+        """Square instances round-trip through Square.json."""
+        try:
+            Square.save_to_file(None)
+            self.assertEqual(Square.load_from_file(), [])
+            Square.save_to_file([])
+            self.assertEqual(Square.load_from_file(), [])
+            Square.save_to_file([Square(1, 0, 0, 7)])
+            out = Square.load_from_file()
+            self.assertEqual(len(out), 1)
+            self.assertIsInstance(out[0], Square)
+            self.assertEqual(out[0].to_dictionary(),
+                             Square(1, 0, 0, 7).to_dictionary())
+        finally:
+            if os.path.exists("Square.json"):
+                os.remove("Square.json")
+
+    def test_load_from_missing_file(self):
+        """Loading without a file gives an empty list."""
+        if os.path.exists("Square.json"):
+            os.remove("Square.json")
+        self.assertEqual(Square.load_from_file(), [])
 
 
 if __name__ == "__main__":

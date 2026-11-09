@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Unit tests for models/rectangle.py."""
 import io
+import os
 import unittest
 from contextlib import redirect_stdout
 from models.base import Base
@@ -220,6 +221,29 @@ class TestRectangle(unittest.TestCase):
         d = r.to_dictionary()
         d["width"] = 50
         self.assertEqual(r.width, 1)
+
+    def test_save_and_load(self):
+        """Rectangle instances round-trip through Rectangle.json."""
+        try:
+            Rectangle.save_to_file(None)
+            self.assertEqual(Rectangle.load_from_file(), [])
+            Rectangle.save_to_file([])
+            self.assertEqual(Rectangle.load_from_file(), [])
+            Rectangle.save_to_file([Rectangle(1, 2, 0, 0, 7)])
+            out = Rectangle.load_from_file()
+            self.assertEqual(len(out), 1)
+            self.assertIsInstance(out[0], Rectangle)
+            self.assertEqual(out[0].to_dictionary(),
+                             Rectangle(1, 2, 0, 0, 7).to_dictionary())
+        finally:
+            if os.path.exists("Rectangle.json"):
+                os.remove("Rectangle.json")
+
+    def test_load_from_missing_file(self):
+        """Loading without a file gives an empty list."""
+        if os.path.exists("Rectangle.json"):
+            os.remove("Rectangle.json")
+        self.assertEqual(Rectangle.load_from_file(), [])
 
 
 if __name__ == "__main__":
