@@ -225,9 +225,8 @@ class TestRectangle(unittest.TestCase):
     def test_save_and_load(self):
         """Rectangle instances round-trip through Rectangle.json."""
         try:
+            Rectangle.save_to_file([Rectangle(1, 2, 0, 0, 7)])
             Rectangle.save_to_file(None)
-            self.assertEqual(Rectangle.load_from_file(), [])
-            Rectangle.save_to_file([])
             self.assertEqual(Rectangle.load_from_file(), [])
             Rectangle.save_to_file([Rectangle(1, 2, 0, 0, 7)])
             out = Rectangle.load_from_file()
@@ -235,6 +234,8 @@ class TestRectangle(unittest.TestCase):
             self.assertIsInstance(out[0], Rectangle)
             self.assertEqual(out[0].to_dictionary(),
                              Rectangle(1, 2, 0, 0, 7).to_dictionary())
+            Rectangle.save_to_file([])
+            self.assertEqual(Rectangle.load_from_file(), [])
         finally:
             if os.path.exists("Rectangle.json"):
                 os.remove("Rectangle.json")

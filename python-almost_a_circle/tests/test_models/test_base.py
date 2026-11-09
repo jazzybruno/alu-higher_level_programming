@@ -110,15 +110,35 @@ class TestBase(unittest.TestCase):
         with open("Square.json", "r") as f:
             self.assertEqual(json.loads(f.read()), [s.to_dictionary()])
 
-    def test_save_to_file_none_and_empty(self):
-        """None and empty lists save an empty JSON list."""
-        Rectangle.save_to_file(None)
+    def _saved_text(self, cls, objs):
+        """Save objs after a non-empty save and return the file text."""
+        cls.save_to_file([cls(4, 5) if cls is Rectangle else cls(4)])
+        cls.save_to_file(objs)
+        with open(cls.__name__ + ".json", "r") as f:
+            return f.read()
+
+    def test_rectangle_save_to_file_none(self):
+        """Rectangle.save_to_file(None) saves an empty list."""
+        self.assertEqual(self._saved_text(Rectangle, None), "[]")
+
+    def test_rectangle_save_to_file_empty(self):
+        """Rectangle.save_to_file([]) saves an empty list."""
+        self.assertEqual(self._saved_text(Rectangle, []), "[]")
+
+    def test_square_save_to_file_none(self):
+        """Square.save_to_file(None) saves an empty list."""
+        self.assertEqual(self._saved_text(Square, None), "[]")
+
+    def test_square_save_to_file_empty(self):
+        """Square.save_to_file([]) saves an empty list."""
+        self.assertEqual(self._saved_text(Square, []), "[]")
+
+    def test_save_to_file_empty_from_scratch(self):
+        """Saving None or [] creates the file when it is missing."""
+        Rectangle.save_to_file([])
         with open("Rectangle.json", "r") as f:
             self.assertEqual(f.read(), "[]")
         Square.save_to_file(None)
-        with open("Square.json", "r") as f:
-            self.assertEqual(f.read(), "[]")
-        Square.save_to_file([])
         with open("Square.json", "r") as f:
             self.assertEqual(f.read(), "[]")
 

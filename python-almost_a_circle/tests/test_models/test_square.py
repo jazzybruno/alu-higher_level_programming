@@ -151,9 +151,8 @@ class TestSquare(unittest.TestCase):
     def test_save_and_load(self):
         """Square instances round-trip through Square.json."""
         try:
+            Square.save_to_file([Square(1, 0, 0, 7)])
             Square.save_to_file(None)
-            self.assertEqual(Square.load_from_file(), [])
-            Square.save_to_file([])
             self.assertEqual(Square.load_from_file(), [])
             Square.save_to_file([Square(1, 0, 0, 7)])
             out = Square.load_from_file()
@@ -161,6 +160,8 @@ class TestSquare(unittest.TestCase):
             self.assertIsInstance(out[0], Square)
             self.assertEqual(out[0].to_dictionary(),
                              Square(1, 0, 0, 7).to_dictionary())
+            Square.save_to_file([])
+            self.assertEqual(Square.load_from_file(), [])
         finally:
             if os.path.exists("Square.json"):
                 os.remove("Square.json")
