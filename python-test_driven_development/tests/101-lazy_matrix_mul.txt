@@ -1,0 +1,35 @@
+The ``101-lazy_matrix_mul`` module
+==================================
+
+    >>> lazy_matrix_mul = __import__('101-lazy_matrix_mul').lazy_matrix_mul
+
+Square and rectangular products:
+
+    >>> print(lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2], [3, 4]]))
+    [[ 7 10]
+     [15 22]]
+
+    >>> print(lazy_matrix_mul([[1, 2]], [[3, 4], [5, 6]]))
+    [[13 16]]
+
+Non-number elements raise an error (its type depends on the NumPy version):
+
+    >>> try:
+    ...     lazy_matrix_mul([[1, "2"]], [[1], [2]])
+    ... except Exception:
+    ...     print("error")
+    error
+
+Incompatible sizes:
+
+    >>> lazy_matrix_mul([[1, 2]], [[1, 2]]) # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+    ...
+    ValueError: shapes (1,2) and (1,2) not aligned: 2 (dim 1) != 1 (dim 0)
+
+Missing arguments:
+
+    >>> lazy_matrix_mul() # doctest: +IGNORE_EXCEPTION_DETAIL
+    Traceback (most recent call last):
+    ...
+    TypeError: lazy_matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'

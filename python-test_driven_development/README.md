@@ -13,3 +13,5 @@ Writing documentation and tests first: doctest files in `tests/*.txt` and a `uni
 | `tests/6-max_integer_test.py` | `unittest` suite for `max_integer` |
 
 Run the tests with `python3 -m doctest ./tests/*.txt` and `python3 -m unittest tests.6-max_integer_test`.
+| `100-matrix_mul.py` | Multiplies two matrices with full validation (tests: `tests/100-matrix_mul.txt`) |
+| `101-lazy_matrix_mul.py` | Multiplies two matrices with NumPy (tests: `tests/101-lazy_matrix_mul.txt`) |
