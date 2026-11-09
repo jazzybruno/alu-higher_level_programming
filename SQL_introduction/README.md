@@ -21,3 +21,7 @@ First steps with MySQL 8.0: creating and dropping databases and tables, insertin
 | `14-average.sql` | Average score as `average` |
 | `15-groups.sql` | Number of records per score, labelled `number` |
 | `16-no_link.sql` | Lists named records by score descending |
+| `100-move_to_utf8.sql` | Converts `hbtn_0c_0`, `first_table` and `name` to `utf8mb4_unicode_ci` |
+| `101-avg_temperatures.sql` | Average temperature by city, hottest first |
+| `102-top_city.sql` | Top 3 cities by average temperature in July and August |
+| `103-max_state.sql` | Max temperature of each state |
