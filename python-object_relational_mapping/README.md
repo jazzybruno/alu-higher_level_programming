@@ -21,3 +21,8 @@ the SQLAlchemy ORM.
 | `13-model_state_delete_a.py` | Delete states containing `a` |
 | `model_city.py` | `City` model linked to `states.id` |
 | `14-model_city_fetch_by_state.py` | All cities with their state |
+| `relationship_state.py` | `State` with a `cities` relationship (cascade delete) |
+| `relationship_city.py` | `City` model for the relationship tasks (`city.state` backref) |
+| `100-relationship_states_cities.py` | Create California with San Francisco |
+| `101-relationship_states_cities_list.py` | Every state and its cities, one query |
+| `102-relationship_cities_states_list.py` | Every city with its state, one query |
