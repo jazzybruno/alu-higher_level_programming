@@ -14,3 +14,4 @@ Fetching web resources from Python with `urllib` and `requests`: GET and POST, h
 | `7-error_code.py` | Prints the body, or `Error code:` for status >= 400 |
 | `8-json_api.py` | Searches users and prints `[id] name`, `No result` or `Not a valid JSON` |
 | `10-my_github.py` | Prints a GitHub user id using Basic Auth with a token |
+| `100-github_commits.py` | Lists the 10 latest commits of a repository as `sha: author` |
