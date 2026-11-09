@@ -12,20 +12,80 @@ Square and rectangular products:
     >>> print(lazy_matrix_mul([[1, 2]], [[3, 4], [5, 6]]))
     [[13 16]]
 
-Non-number elements raise an error (its type depends on the NumPy version):
+Invalid inputs raise an error (its type and message depend on the NumPy
+version, so only the failure is checked):
+
+M_a is a string:
 
     >>> try:
-    ...     lazy_matrix_mul([[1, "2"]], [[1], [2]])
+    ...     lazy_matrix_mul("string", [[1, 2], [3, 4]])
     ... except Exception:
     ...     print("error")
     error
 
-Incompatible sizes:
+M_b is a string:
 
-    >>> lazy_matrix_mul([[1, 2]], [[1, 2]]) # doctest: +IGNORE_EXCEPTION_DETAIL
-    Traceback (most recent call last):
-    ...
-    ValueError: shapes (1,2) and (1,2) not aligned: 2 (dim 1) != 1 (dim 0)
+    >>> try:
+    ...     lazy_matrix_mul([[1, 2], [3, 4]], "string")
+    ... except Exception:
+    ...     print("error")
+    error
+
+M_a is empty:
+
+    >>> try:
+    ...     lazy_matrix_mul([], [[1, 2], [3, 4]])
+    ... except Exception:
+    ...     print("error")
+    error
+
+M_b is empty:
+
+    >>> try:
+    ...     lazy_matrix_mul([[1, 2], [3, 4]], [])
+    ... except Exception:
+    ...     print("error")
+    error
+
+M_a contains a non-number:
+
+    >>> try:
+    ...     lazy_matrix_mul([[1, "2"], [3, 4]], [[1, 2], [3, 4]])
+    ... except Exception:
+    ...     print("error")
+    error
+
+M_b contains a non-number:
+
+    >>> try:
+    ...     lazy_matrix_mul([[1, 2], [3, 4]], [[1, None], [3, 4]])
+    ... except Exception:
+    ...     print("error")
+    error
+
+M_a rows have different sizes:
+
+    >>> try:
+    ...     lazy_matrix_mul([[1, 2], [3]], [[1, 2], [3, 4]])
+    ... except Exception:
+    ...     print("error")
+    error
+
+M_b rows have different sizes:
+
+    >>> try:
+    ...     lazy_matrix_mul([[1, 2], [3, 4]], [[1, 2], [3]])
+    ... except Exception:
+    ...     print("error")
+    error
+
+M_a and m_b can't be multiplied:
+
+    >>> try:
+    ...     lazy_matrix_mul([[1, 2]], [[1, 2]])
+    ... except Exception:
+    ...     print("error")
+    error
 
 Missing arguments:
 
